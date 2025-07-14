@@ -1,0 +1,8 @@
+/mvnw text eol=lf
+*.cmd text eol=crlf
+# Tell GitHub Linguist to ignore frontend files for language stats
+*.html linguist-vendored
+*.js linguist-vendored
+*.css linguist-vendored
+*.json linguist-vendored
+*.yml linguist-vendored
