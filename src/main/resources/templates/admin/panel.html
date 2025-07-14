@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <title>Админ-панель</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<header class="header">
+    <div>
+        <img class="logo" th:src="@{/img/logo.png}">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Выйти</button>
+        </form>
+    </div>
+</header>
+<section class="d-flex justify-content-center align-items-center">
+    <div class="container">
+        <h2 class="admin-title">Добавление курса</h2>
+
+        <form class="admin-form" th:action="@{/admin/save-course}" method="post" enctype="multipart/form-data">
+            <label class="admin-label">Название курса:</label>
+            <input type="text" name="title" class="admin-input" required>
+
+            <label class="admin-label">Описание:</label>
+            <textarea name="description" rows="3" class="admin-textarea"></textarea>
+
+            <label class="admin-label">Загрузите иконки:</label>
+            <input type="file" name="icons" multiple accept="image/*" class="admin-input">
+
+            <button type="submit" class="admin-button">Сохранить</button>
+        </form>
+
+        <div class="admin-links">
+            <a th:href="@{/admin/users}" class="admin-link">👤 Пользователи</a>
+            <a th:href="@{/admin/user-form}" class="admin-link">➕ Добавить пользователя</a>
+        </div>
+
+        <h2 class="admin-title">Существующие курсы</h2>
+
+        <div class="admin-course-list">
+            <div th:each="c : ${courses}" class="admin-course-card">
+                <div class="admin-course-header">
+                    <h3 th:text="${c.title}" class="admin-course-title"></h3>
+                    <div class="admin-actions">
+                        <a th:href="@{'/admin/module-form/' + ${c.id}}" class="admin-link">➕ Добавить модуль</a>
+                        <a th:href="@{'/admin/edit-course/' + ${c.id}}" class="admin-link">✏️ Редактировать курс</a>
+                        <a th:href="@{'/admin/delete-course/' + ${c.id}}" class="admin-link red"
+                           onclick="return confirm('Удалить курс?')">🗑 Удалить курс</a>
+                    </div>
+                </div>
+
+                <div th:if="${c.modules != null}" class="admin-modules">
+                    <div th:each="m : ${c.modules}" class="admin-module-block">
+                        <div class="admin-module-header">
+                            <strong th:text="${m.title}" class="admin-module-title"></strong>
+                            <div class="admin-actions">
+                                <a th:href="@{'/admin/video-form/' + ${m.id}}" class="admin-link">➕ Добавить видео</a>
+                                <a th:href="@{'/admin/edit-module/' + ${m.id}}" class="admin-link">✏️ Редактировать модуль</a>
+                                <a th:href="@{'/admin/delete-module/' + ${m.id}}" class="admin-link red"
+                                   onclick="return confirm('Удалить модуль?')">🗑 Удалить модуль</a>
+                            </div>
+                        </div>
+
+                        <div th:if="${m.videos != null}" class="admin-video-list">
+                            <div th:each="v : ${m.videos}" class="admin-video-block">
+                                <span class="admin-video-title">📹 <span th:text="${v.title}"></span></span>
+                                <div class="admin-actions">
+                                    <a th:href="@{'/admin/edit-video/' + ${v.id}}" class="admin-link">✏️ Редактировать видео</a>
+                                    <a th:href="@{'/admin/delete-video/' + ${v.id}}" class="admin-link red"
+                                       onclick="return confirm('Удалить видео?')">🗑 Удалить видео</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div th:if="${param.success}" class="admin-success">
+            <p>Курс успешно добавлен!</p>
+        </div>
+
+
+    </div>
+</section>
+<p style="margin: 0 auto; text-align: center;padding-top: 50px;padding-bottom: 30px;">2020-2025 © Web-Beam все права защищены</p>
+</body>
+</html>

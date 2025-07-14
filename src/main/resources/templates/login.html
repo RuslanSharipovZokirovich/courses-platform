@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в систему</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<section class="d-flex justify-content-center align-items-center onet-vh">
+<div class="container ">
+    <h1>Вход</h1>
+
+    <form class="form" th:action="@{/send-code}" method="post">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required placeholder="Введите ваш email">
+
+        <button type="submit">Получить код</button>
+
+        <p class="warning">
+            Внимание: доступ разрешён только с одного устройства.<br>
+            Повторный вход с другого IP будет заблокирован.
+        </p>
+
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+    </form>
+</div>
+</section>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <title>Модуль</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:text="${module.title}">Детали курса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+    <div>
+        <img class="logo" th:src="@{/img/logo.png}">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Выйти</button>
+        </form>
+    </div>
+</header>
+<section class="d-flex justify-content-center align-items-center module__det">
+    <div class="container">
+        <h1 th:text="${module.title}" class="courses__head__title">Название курса</h1>
+        <div th:each="video : ${module.videos}">
+<!--            <p th:text="${video.title}" class="video-title"></p>-->
+
+
+
+            <video class="video__module" controls
+                   controlsList="nodownload"
+                   oncontextmenu="return false"
+                   th:attr="id='video__' + ${video.id}"></video>
+
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetch('/secure-video/' + /*[[${video.fileName}]]*/, {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const videoElement = document.getElementById('video__' + /*[[${video.id}]]*/);
+                        if (videoElement) {
+                            videoElement.src = url;
+                        }
+                    });
+                });
+                /*]]>*/
+            </script>
+
+            <hr class="hr">
+
+            <p th:utext="${video.description}" class="video-description"></p>
+        </div>
+
+
+
+        <a class="button" th:href="@{/courses/{id}(id=${module.course.id})}" style="margin-top:20px; display:inline-block;">Назад к модулям</a>
+    </div>
+</section>
+
+
+</body>
+</html>

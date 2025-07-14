@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <title>Добавить видео</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+</head>
+<body>
+<header class="header">
+    <div>
+        <img class="logo" th:src="@{/img/logo.png}">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Выйти</button>
+        </form>
+    </div>
+</header>
+<section class="d-flex justify-content-center align-items-center">
+    <div class="container">
+        <h1 class="admin-title">Добавить видео</h1>
+
+        <form th:action="@{/admin/save-video}" method="post" enctype="multipart/form-data" class="admin-form">
+            <input type="hidden" name="moduleId" th:value="${moduleId}"/>
+
+            <div class="admin-form-group">
+                <label class="admin-label">Название видео:</label>
+                <input type="text" name="title" required class="admin-input">
+            </div>
+
+            <div class="admin-form-group">
+                <label class="admin-label">Файл видео (.mp4 / .webm):</label>
+                <input type="file" name="file" accept="video/*" required class="admin-input">
+            </div>
+
+            <div class="admin-form-group">
+                <label class="admin-label">Описание видео (Markdown):</label>
+                <textarea id="description" name="description" class="admin-textarea"></textarea>
+            </div>
+
+            <div class="admin-form-actions">
+                <button type="submit" class="admin-btn">💾 Сохранить видео</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        new EasyMDE({
+            element: document.getElementById("description"),
+            spellChecker: false,
+            placeholder: "Введите описание с форматированием..."
+        });
+    });
+</script>
+<p style="margin: 0 auto; text-align: center;padding-top: 50px;padding-bottom: 30px;">2020-2025 © Web-Beam все права защищены</p>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:text="${course.title}">Детали курса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body oncontextmenu="return false">
+<header class="header">
+    <div>
+        <img class="logo" th:src="@{/img/logo.png}">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Выйти</button>
+        </form>
+    </div>
+</header>
+
+<section class="d-flex justify-content-center align-items-center">
+    <div class="container">
+        <h1 th:text="${course.title}" class="courses__head__title">Название курса</h1>
+        <div class="course__detail__block" th:each="module : ${course.modules}">
+            <p th:text="${module.title}">Название модуля</p>
+            <a th:href="@{'/modules/' + ${module.id}}">Начать изучение</a>
+        </div>
+        <a class="button" th:href="@{/courses}">Назад к списку курсов</a>
+    </div>
+</section>
+
+
+
+
+
+
+</body>
+</html>

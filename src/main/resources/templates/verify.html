@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <title>Подтверждение кода</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<section class="d-flex justify-content-center align-items-center onet-vh">
+<div class="container">
+    <h1>Введите код подтверждения</h1>
+
+    <form class="form" th:action="@{/verify}" method="post">
+        <label for="code">Код</label>
+        <input type="text" name="code" id="code" required placeholder="6-значный код">
+
+        <button type="submit">Подтвердить</button>
+
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+    </form>
+</div>
+</section>
+</body>
+</html>

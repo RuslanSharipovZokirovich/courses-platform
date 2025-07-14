@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <title>Добавить видео</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+</head>
+<body>
+<header class="header">
+    <div>
+        <img class="logo" th:src="@{/img/logo.png}">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Выйти</button>
+        </form>
+    </div>
+</header>
+<section class="d-flex justify-content-center align-items-center">
+    <div class="container">
+<h2 class="admin-title">Список пользователей</h2>
+
+        <table class="admin-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Роль</th>
+                <th>Активен</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u : ${users}">
+                <td th:text="${u.id}"></td>
+                <td th:text="${u.username}"></td>
+                <td th:text="${u.role}"></td>
+                <td th:text="${u.enabled ? 'Да' : 'Нет'}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+<a th:href="@{/admin/panel}" class="admin-back-link">← Назад</a>
+
+    </div>
+</section>
+<p style="margin: 0 auto; text-align: center;padding-top: 50px;padding-bottom: 30px;">2020-2025 © Web-Beam все права защищены</p>
+
+
+</body>
+</html>
